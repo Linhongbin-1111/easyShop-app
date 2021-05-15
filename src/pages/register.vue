@@ -7,58 +7,56 @@
     <div class="logo">
       <img src="../assets/images/applogo.png" alt="">
     </div>
-    <van-form validate-first @failed="onFailed">
-      <!-- 通过 pattern 进行正则校验 -->
+    <van-form @submit="submit" style="width: 80%; margin: 0 auto;">
       <van-field
-        v-model="value1"
-        name="pattern"
-        placeholder="正则校验"
-        :rules="[{ pattern, message: '请输入正确内容' }]"
+        label-width="60px"
+        v-model="formData.userAccount"
+        name="用户名"
+        label="用户名"
+        :rules="[{ required: true, message: '请输入用户名', trigger: 'blur' }]"
       />
-      <!-- 通过 validator 进行函数校验 -->
       <van-field
-        v-model="value2"
-        name="validator"
-        placeholder="函数校验"
-        :rules="[{ validator, message: '请输入正确内容' }]"
+        label-width="60px"
+        v-model="formData.userPassword"
+        name="密码"
+        label="密码"
+        type="password"
+        :rules="[{ required: true, message: '请输入密码', trigger: 'blur' },{min: 6, max: 18, message: '密码长度6-18位', trigger: 'blur'}]"
       />
-      <!-- 通过 validator 进行异步函数校验 -->
       <van-field
-        v-model="value3"
-        name="asyncValidator"
-        placeholder="异步函数校验"
-        :rules="[{ validator: asyncValidator, message: '请输入正确内容' }]"
+        label-width="60px"
+        v-model="formData.confirmUserPassword"
+        name="确认密码"
+        label="确认密码"
+        type="password"
+        :rules="[{ required: true, message: '请输入确认密码', trigger: 'blur' },{min: 6, max: 18, message: '密码长度6-18位', trigger: 'blur'}]"
       />
+      <van-field
+        label-width="60px"
+        v-model="formData.phone"
+        name="手机号"
+        label="手机号"
+        :rules="[{ required: true, message: '请输入手机号', trigger: 'blur' },{ pattern: /^1\d{10}$/, message: '请输入正确手机格式' }]"
+      />
+      <van-field
+        label-width="60px"
+        v-model="formData.userName"
+        name="姓名"
+        label="姓名"
+        :rules="[{ required: true, message: '请输入姓名', trigger: 'blur' }]"
+      />
+      <van-field name="头像" label="头像">
+        <template #input>
+          <van-uploader v-model="formData.photo" />
+        </template>
+      </van-field>
+      <!-- <el-form-item label="头像" prop="photo" style="margin-left: -40px; margin-right: 20px">
+        <i-file class="i-file" v-model="formData.photo"></i-file>
+      </el-form-item> -->
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">注 册</van-button>
+        <van-button round block color="linear-gradient(to right, #ff6034, #ee0a24)" native-type="submit">注 册</van-button>
       </div>
     </van-form>
-    <el-form ref="form" :model="formData" :rules="formRules" inline label-width="80px">
-      <el-form-item label="用户名" prop="userAccount">
-        <el-input v-model="formData.userAccount"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="userPassword">
-        <el-input type="password" v-model="formData.userPassword"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="confirmUserPassword">
-        <el-input type="password" v-model="formData.confirmUserPassword"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号" prop="phone">
-        <el-input v-model.number="formData.phone"></el-input>
-      </el-form-item>
-      <el-form-item label="姓名" prop="userName">
-        <el-input v-model="formData.userName"></el-input>
-      </el-form-item>
-      <el-form-item label="头像" prop="photo" style="margin-left: -40px; margin-right: 20px">
-        <i-file class="i-file" v-model="formData.photo"></i-file>
-      </el-form-item>
-      <el-form-item>
-        <el-button class="register-btn" type="primary" @click="submit">注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册</el-button>
-        <div>
-          <el-button class="backtologin" type="text" @click="toLogin">返回登录</el-button>
-        </div>
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 
@@ -76,52 +74,10 @@ export default {
   data () {
     return {
       formData: {},
-      pattern: /\d{6}/,
       pic: '',
-      formRules: {
-        userAccount: [
-          {required: true, message: '请输入用户账号', trigger: 'blur'}
-        ],
-        userPassword: [
-          {required: true, message: '请输入用户密码', trigger: 'blur'},
-          {min: 6, max: 18, message: '密码不能小于6位', trigger: 'blur'}
-        ],
-        confirmUserPassword: [
-          {required: true, message: '请输入确认密码', trigger: 'blur'},
-          {min: 6, message: '密码不能小于6位', trigger: 'blur'}
-        ],
-        phone: [
-          {required: true, message: '请输入手机号', trigger: 'blur'},
-          { pattern: /^1\d{10}$/, message: '请输入正确手机格式' }
-        ],
-        userName: [
-          {required: true, message: '请输入用户名', trigger: 'blur'}
-        ]
-      }
     }
   },
   methods: {
-    toLogin () {
-      this.$router.push({path: '/login'})
-    },
-    // 校验函数返回 true 表示校验通过，false 表示不通过
-    validator(val) {
-      return /1\d{10}/.test(val);
-    },
-    // 异步校验函数返回 Promise
-    asyncValidator(val) {
-      return new Promise((resolve) => {
-        Toast.loading('验证中...');
-
-        setTimeout(() => {
-          Toast.clear();
-          resolve(/\d{6}/.test(val));
-        }, 1000);
-      });
-    },
-    onFailed(errorInfo) {
-      console.log('failed', errorInfo);
-    },
     submit () {
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -202,26 +158,10 @@ export default {
     }
   }
 }
-
-.register-btn {
-  // width: 150px;
-  // height: 40px;
-  // margin-top: 150px;
-  display: block;
-  margin: 0 auto;
-  width: 200px;
-  height: 45px;
-  border-radius: 10px;
-  background: #e1251b;
-  border: 0px;
-  font-size: 20px;
-  margin-top: 30px;
-}
-.backtologin {
-  color: #e1251b;
-}
 .i-file {
-  margin-top: 5px;
+  width: 100%;
+  height: 100%;
+  // margin-top: 5px;
   // margin-left: 10px;
 }
 </style>
