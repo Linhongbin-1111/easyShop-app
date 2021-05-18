@@ -2,7 +2,7 @@ import axios from 'axios'
 import {throwErr} from './throwErr.js'
 // import store from '../store/index.js'
 
-const urlHead = 'http://n31335685f.wicp.vip/'
+const urlHead = 'http://localhost:8080/'
 const qs = require('qs')
 
 /**

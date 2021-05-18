@@ -29,8 +29,8 @@
           <p>跑步鞋</p>
         </li>
         <li @click="toCommClassify()">
-          <img src="../../assets/images/有害垃圾-过期化妆品.png" alt="">
-          <p>化妆品</p>
+          <img src="../../assets/images/帆布鞋.png" alt="">
+          <p>帆布鞋</p>
         </li>
         <li @click="toCommClassify()">
           <img src="../../assets/images/衣服 (1).png" alt="">

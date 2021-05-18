@@ -35,26 +35,26 @@ export default {
   methods: {
     submit () {
       if (!this.userPassword) {
-        this.$message.info('请输入原密码')
+        this.$toast.fail('请输入原密码')
 
         return false
       }
       if (!this.userNewPassword) {
-        this.$message.info('请输入新密码')
+        this.$toast.fail('请输入新密码')
 
         return false
       }
       if (this.userNewPassword.length < 6) {
-        this.$message.info('密码不能小于6位')
+        this.$toast.fail('密码不能小于6位')
         return false
       }
       if (!this.userNewConfirmPassword) {
-        this.$message.info('请确认新密码')
+        this.$toast.fail('请确认新密码')
 
         return false
       }
       if (this.userNewPassword !== this.userNewConfirmPassword) {
-        this.$message.info('两次输入的密码不一致')
+        this.$toast.fail('两次输入的密码不一致')
 
         return false
       }
@@ -65,14 +65,14 @@ export default {
         version: JSON.parse(sessionStorage.getItem('roleInfo')).version
       }).then(data => {
         if (data.code === 0) {
-          this.$message.success(data.msg)
+          this.$toast.success(data.msg)
           sessionStorage.clear('userInfo')
           sessionStorage.clear('roleInfo')
           sessionStorage.clear('currentComm')
 
           this.$router.push('/login')
         } else {
-          this.$message.error(data.msg)
+          this.$toast.fail(data.msg)
         }
         // console.log(data)
       })

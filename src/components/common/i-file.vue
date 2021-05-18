@@ -60,7 +60,7 @@ export default {
 
         axios({
           method: 'post',
-          url: 'http://n31335685f.wicp.vip/pc/image/upload',
+          url: 'http://localhost:8080/pc/image/upload',
           data: form,
           headers: {
             'Content-Type': 'multipart/form-data'

@@ -49,7 +49,7 @@ export default {
     addEvaluate () {
       axios({
         method: 'post',
-        url: 'http://n31335685f.wicp.vip/app/clientOrder/addCommodityAssess',
+        url: 'http://localhost:8080/app/clientOrder/addCommodityAssess',
         data: JSON.stringify({
           orderCode: this.$route.query.orderCode,
           assessInfoList: this.evaluateList.map(item => {
@@ -65,11 +65,11 @@ export default {
       }).then(data => {
         if (data.data.code === 0) {
           // console.log(data)
-          this.$message.success(data.data.msg)
+          this.$toast.success(data.data.msg)
 
           this.$router.push({path: '/order-list'})
         } else {
-          this.$message.error(data.data.msg)
+          this.$toast.fail(data.data.msg)
         }
       })
     }
@@ -98,12 +98,12 @@ export default {
       align-items: center;
 
       img {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
       }
 
       .star {
-        width: 180px;
+        width: 160px;
         height: 36px;
         background: url('../../assets/stars.png');
         background-repeat: no-repeat;
@@ -134,9 +134,9 @@ export default {
   margin-top: 100px;
 }
   .el-rate {
-    margin-left: 30px;
+    margin-left: 40px;
   /deep/ i {
-   font-size: 35px;
+   font-size: 28px;
   }
   }
 }

@@ -22,6 +22,7 @@
               <div class="text">
                   <div class="text-con">{{item.comName}}</div>
                   <div class="props-con">{{item.comPresent}}</div>
+                  <div class="props-con">{{item.spec}}</div>
                   <div class="price-con">
                       <span>￥</span>
                       <span>{{item.comPrice}} </span>
@@ -56,7 +57,8 @@ export default {
       totalNumber: 0,
       page: String,
       comCode: '',
-      comCount: this.$route.query.comCount
+      comCount: this.$route.query.comCount,
+      specCode: null
     }
   },
   computed: {
@@ -67,6 +69,8 @@ export default {
     this.getAdress()
     if (this.page === '1') {
       this.comCode = JSON.parse(sessionStorage.getItem('commDetail')).comCode
+      this.specCode = JSON.parse(sessionStorage.getItem('commDetail')).specCode
+      console.log(this.specCode)
       this.list = [JSON.parse(sessionStorage.getItem('commDetail'))]
       this.totalPrice = JSON.parse(sessionStorage.getItem('totalPrice'))
       this.totalNumber = this.$route.query.comCount
@@ -85,15 +89,16 @@ export default {
         req('addOrder', {
           comCode: this.comCode,
           comCount: this.$route.query.comCount,
-          addressCode: this.addressCode
+          addressCode: this.addressCode,
+          specCode: this.specCode
         }).then(data => {
           if (data.code === 0) {
-            this.$message.success(data.msg)
+            this.$toast.success(data.msg)
             // sessionStorage.clear('commDetail')
             // sessionStorage.clear('totalPrice')
             this.$router.push('order-list')
           } else {
-            this.$message.error(data.msg)
+            this.$toast.fail(data.msg)
           }
         })
       } else if (this.page === '2') {
@@ -108,20 +113,25 @@ export default {
         let cartCodes = this.list.map(item => {
           return item.cartCode
         }).toString()
+
+        let specCodes = this.list.map(item => {
+          return item.specCode
+        }).toString()
         // console.log(goodsIds, comCounts, cartCodes)
         req('addOrder', {
           comCode: goodsIds,
           comCount: comCounts,
           cartCode: cartCodes,
-          addressCode: this.addressCode
+          addressCode: this.addressCode,
+          specCode: specCodes
         }).then(data => {
           if (data.code === 0) {
-            this.$message.success(data.msg)
+            this.$toast.success(data.msg)
             // sessionStorage.clear('shopCarList')
             // sessionStorage.clear('totalPrice')
             this.$router.push({path: '/order-list'})
           } else {
-            this.$message.error(data.msg)
+            this.$toast.fail(data.msg)
           }
         })
       }
@@ -137,7 +147,7 @@ export default {
           }
         })
         if (count === 0) {
-          this.$message.info('你还没有设置收货地址，将跳转到设置收货地址页面')
+          this.$toast.fail('你还没有设置收货地址，将跳转到设置收货地址页面')
           this.$router.push('/change-adress')
         }
         data.data.map(item => {
@@ -261,7 +271,8 @@ export default {
               margin-right: 10px;
               margin-left: -10px;
               img {
-                  width: 84px;
+                  width: 85px;
+                  height: 84px;
               }
           }
           .text {

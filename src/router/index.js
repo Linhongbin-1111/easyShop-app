@@ -80,7 +80,7 @@ export default new Router({
                 toPath: '/comm-evaluate'
               }
             ],
-            goBack: '/comm-home',
+            goBack: -1,
             goBackShow: true,
             headerHide: false,
             footerShow: false
@@ -98,7 +98,7 @@ export default new Router({
                 toPath: '/comm-evaluate'
               }
             ],
-            goBack: '/comm-detail',
+            goBack: -1,
             goBackShow: true,
             headerHide: false,
             footerShow: false
@@ -134,7 +134,7 @@ export default new Router({
                 toPath: '/shop-car'
               }
             ],
-            goBack: '/comm-home',
+            goBack: -1,
             goBackShow: true,
             headerHide: false,
             footerShow: true
@@ -224,7 +224,7 @@ export default new Router({
                 toPath: '/select-adress'
               }
             ],
-            goBack: '/comm-detail',
+            goBack: -1,
             goBackShow: true,
             headerHide: false,
             footerShow: false
@@ -314,7 +314,7 @@ export default new Router({
                 toPath: '/confirm-order'
               }
             ],
-            goBack: '/shop-car',
+            goBack: -1,
             goBackShow: true,
             headerHide: false,
             footerShow: false

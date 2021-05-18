@@ -16,7 +16,7 @@
           <img :src="item.picPath" alt="">
           <div>
             <div>{{item.comName}}</div>
-            <div></div>
+            <div>{{item.spec}}</div>
             <div class="price-count-box">
               <div class="price-box">
                 <span>￥</span>
@@ -89,7 +89,7 @@ export default {
       console.log(payCommList)
 
       if (!payCommList.length) {
-        this.$message.info('请先选择需要购买的商品')
+        this.$toast.fail('请先选择需要购买的商品')
 
         return
       }
@@ -110,7 +110,7 @@ export default {
       })
 
       if (!payCommList.length) {
-        this.$message.error('请先选择需要删除的商品')
+        this.$toast.fail('请先选择需要删除的商品')
 
         return
       }
@@ -123,18 +123,18 @@ export default {
 
       req('deleteShopCar', {cartCode: shopCartIds}).then(data => {
         if (data.code === 0) {
-          this.$message.success(data.msg)
+          this.$toast.success(data.msg)
 
           this.getShopCarList()
         } else {
-          this.$message.error(data.msg)
+          this.$toast.fail(data.msg)
         }
       })
     },
     // 全选按钮
     allInputChange () {
       if (this.list.length === 0) {
-        this.$message.error('没有商品可以选中')
+        this.$toast.fail('没有商品可以选中')
       } else {
         this.allChecked = !this.allChecked
 
@@ -202,7 +202,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  // padding-bottom: 200px;
+  padding-bottom: 130px;
   height: 100%;
   background: #f6f6f6;
 }

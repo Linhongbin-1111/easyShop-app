@@ -105,6 +105,7 @@ export default {
 
     li {
       display: flex;
+      border-bottom: 1px solid #f6f6f6;
 
       // .head-pic {
       //   width: 50px;
@@ -132,6 +133,7 @@ export default {
             .date {
               color: #ddd;
               font-size: 14px;
+              margin-top: 5px;
             }
           }
 

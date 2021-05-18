@@ -57,7 +57,7 @@ export default {
         })
         // 如果没有地址，则提示跳转到设置地址页面
         if (this.adressData.length === 0) {
-          this.$message.info('你还没有设置地址，请前往个人中心设置')
+          this.$toast.fail('你还没有设置地址，请前往个人中心设置')
         }
       })
     },

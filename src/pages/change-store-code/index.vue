@@ -24,20 +24,20 @@ export default {
   methods: {
     changeStoreCode () {
       if (!this.inviteCode) {
-        this.$message.info('请先输入邀请码')
+        this.$toast.fail('请先输入邀请码')
 
         return
       }
 
       req('changeStoreCode', {inviteCode: this.inviteCode}).then(data => {
         if (data.code === 0) {
-          this.$message.success(data.msg)
+          this.$toast.success(data.msg)
 
           setTimeout(() => {
             this.$router.push({path: '/shop-car'})
           })
         } else {
-          this.$message.error(data.msg)
+          this.$toast.fail(data.msg)
         }
       })
     }

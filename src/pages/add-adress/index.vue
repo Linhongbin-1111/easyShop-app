@@ -54,35 +54,29 @@ export default {
   methods: {
     toAddadress () {
       if (!this.adressData.address) {
-        this.$message.info('请先输入地址')
+        this.$toast.fail('请先输入地址')
         return
       }
       if (!this.adressData.status) {
-        this.$message.info('请选择地址类型')
+        this.$toast.fail('请选择地址类型')
         return
       }
       if (!this.adressData.name) {
-        this.$message.info('请先输入姓名')
+        this.$toast.fail('请先输入姓名')
         return
       }
       if (!this.adressData.phone) {
-        this.$message.info('请先输入手机号')
+        this.$toast.fail('请先输入手机号')
         return
       }
       req('addAdress', {
         ...this.adressData
       }).then(data => {
         if (data.code === 0) {
-          this.$message({
-            type: 'success',
-            message: data.msg
-          })
+          this.$toast.success(data.msg)
           this.$router.push({path: '/change-adress'})
         } else {
-          this.$message({
-            type: 'error',
-            message: data.msg
-          })
+          this.$toast.fail(data.msg)
         }
       })
     }

@@ -6,7 +6,7 @@
                 <div class="top-img-con">
                     <img src="../../assets/images/货车.png" style="width: 22px;">
                 </div>
-                <span>收货地址:</span>
+                <div style="margin-left:10px;">收货地址：{{orderDetail.address}}</div>
             </div>
             <!-- <div class="top-item">
                 <div class="top-img-con">
@@ -24,6 +24,7 @@
                 <div class="text">
                     <div class="text-con">{{item.comName}}</div>
                     <div class="props-con">{{item.comPresent}}</div>
+                    <div class="props-con">{{item.spec}}</div>
                     <div class="price-con">
                         <span>￥</span>
                         <span>{{item.comPrice}} </span>
@@ -136,6 +137,7 @@ export default {
           .top-item {
               display: flex;
               padding: 5px 0 22px;
+              border-bottom: 1px solid rgb(204,204,204);
               .top-img-con {
                   width: 30px;
                   text-align: center;
@@ -155,9 +157,10 @@ export default {
           width: 95%;
           margin: 0 auto;
           background-color: white;
-          border-radius: 8px;
+          // border-radius: 8px;
           padding: 10px 15px;
           box-sizing: border-box;
+          // border-bottom: 1px solid rgb(204,204,204);
           .item-center {
               width: 100%;
               display: flex;

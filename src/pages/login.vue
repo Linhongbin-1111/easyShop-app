@@ -3,7 +3,7 @@
     <div class="logo">
       <img src="../assets/images/applogo.png" alt="">
     </div>
-    <van-form @submit="login" style="width: 80%; margin: 0 auto;">
+    <van-form validate-first @submit="login" style="width: 80%; margin: 0 auto;" ref="form" >
       <van-field
         label-width="50px"
         clearable
@@ -50,37 +50,30 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          axios({
-            method: 'post',
-            url: 'http://n31335685f.wicp.vip/uaa/auth/form',
-            data: qs.stringify(this.formData),
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;'
-            }
-          }).then(data => {
-            if (data.data.code === 0) {
-              this.$message({
-                type: 'success',
-                message: data.data.msg
-              })
+      console.log('AAA')
+      this.$refs.form.validate().then(() => {
+        axios({
+          method: 'post',
+          url: 'http://localhost:8080/uaa/auth/form',
+          data: qs.stringify(this.formData),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;'
+          }
+        }).then(data => {
+          if (data.data.code === 0) {
+            this.$toast.success(data.data.msg)
 
-              // this.getHeader(data.data.data.access_token)
+            // this.getHeader(data.data.data.access_token)
 
-              sessionStorage.setItem('userInfo', JSON.stringify(data.data.data))
+            sessionStorage.setItem('userInfo', JSON.stringify(data.data.data))
 
-              this.getUserInfo()
-            } else {
-              this.$message({
-                type: 'error',
-                message: data.data.msg
-              })
-            }
-          })
-        } else {
-          return false
-        }
+            this.getUserInfo()
+          } else {
+            this.$toast.success(data.data.msg)
+          }
+        })
+      }).catch(() => {
+        Toast('校验失败');
       })
     },
     getUserInfo () {

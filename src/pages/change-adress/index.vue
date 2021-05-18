@@ -80,7 +80,7 @@ export default {
         addressCode: item.addressCode
       }).then(data => {
         // console.log('数据', data)
-        this.$message.success('删除成功')
+        this.$toast.success('删除成功')
         this.getAdress()
       })
     },

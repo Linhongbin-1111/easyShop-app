@@ -70,38 +70,38 @@ export default {
         ...this.adressData
       }).then(data => {
         console.log('修改地址返回', data)
-        this.$message.success('修改成功')
+        this.$toast.success('修改成功')
         this.$router.push('/change-adress')
       })
     }
     // toAddadress () {
     //   if (!this.adressData.adress) {
-    //     this.$message.info('请先输入地址')
+    //     this.$toast.fail('请先输入地址')
     //     return
     //   }
     //   if (!this.adressData.status) {
-    //     this.$message.info('请选择地址类型')
+    //     this.$toast.fail('请选择地址类型')
     //     return
     //   }
     //   if (!this.adressData.name) {
-    //     this.$message.info('请先输入姓名')
+    //     this.$toast.fail('请先输入姓名')
     //     return
     //   }
     //   if (!this.adressData.phone) {
-    //     this.$message.info('请先输入手机号')
+    //     this.$toast.fail('请先输入手机号')
     //     return
     //   }
     //   req('addAdress', {
     //     ...this.adressData
     //   }).then(data => {
     //     if (data.code === 0) {
-    //       this.$message({
+    //       this.$toast({
     //         type: 'success',
     //         message: data.msg
     //       })
     //       this.$router.push({path: '/change-adress'})
     //     } else {
-    //       this.$message({
+    //       this.$toast({
     //         type: 'error',
     //         message: data.msg
     //       })

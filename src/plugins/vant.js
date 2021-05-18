@@ -17,7 +17,8 @@ import {
   Tabs,
   List,
   TabbarItem,
-  PullRefresh
+  PullRefresh,
+  Popup
 } from 'vant';
 
 var components = [
@@ -25,6 +26,7 @@ var components = [
   NavBar,
   Dialog,
   Toast,
+  Popup,
   Row,
   Col,
   Cell,

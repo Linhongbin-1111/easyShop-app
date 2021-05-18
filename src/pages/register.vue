@@ -7,7 +7,7 @@
     <div class="logo">
       <img src="../assets/images/applogo.png" alt="">
     </div>
-    <van-form @submit="submit" style="width: 80%; margin: 0 auto;">
+    <van-form @submit="submit" style="width: 80%; margin: 0 auto;" ref="form">
       <van-field
         label-width="60px"
         v-model="formData.userAccount"
@@ -79,38 +79,34 @@ export default {
   },
   methods: {
     submit () {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          if (this.formData.userPassword !== this.formData.confirmUserPassword) {
-            this.$message.info('两次输入的密码不一致')
-            return
-          }
-          axios({
-            method: 'post',
-            url: 'http://n31335685f.wicp.vip/app/clientRegistered/addUser',
-            data: qs.stringify(this.formData),
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;'
-            }
-          }).then(data => {
-            if (data.data.code === 0) {
-              this.$message.success(data.data.msg)
-
-              // this.getHeader(data.data.data.access_token)
-
-              // sessionStorage.setItem('userInfo', JSON.stringify(data.data.data))
-
-              setTimeout(() => {
-                this.$router.push({path: '/login'})
-              })
-            } else {
-              this.$message.error(data.data.msg)
-            }
-          })
-        } else {
-          return false
+      this.$refs.form.validate().then(() => {
+        if (this.formData.userPassword !== this.formData.confirmUserPassword) {
+          this.$toast.fail('两次输入的密码不一致')
+          return
         }
-      })
+        axios({
+          method: 'post',
+          url: 'http://localhost:8080/app/clientRegistered/addUser',
+          data: qs.stringify(this.formData),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;'
+          }
+        }).then(data => {
+          if (data.data.code === 0) {
+            this.$toast.success(data.data.msg)
+
+            // this.getHeader(data.data.data.access_token)
+
+            // sessionStorage.setItem('userInfo', JSON.stringify(data.data.data))
+
+            setTimeout(() => {
+              this.$router.push({path: '/login'})
+            })
+          } else {
+            this.$toast.fail(data.data.msg)
+          }
+        })
+      }).catch(() => {})
     }
   }
 }

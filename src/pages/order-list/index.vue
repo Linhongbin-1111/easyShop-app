@@ -34,6 +34,9 @@
                 <div class="props-con">
                     {{childItem.comPresent}}
                 </div>
+                <div class="props-con">
+                    {{childItem.spec}}
+                </div>
                 <div class="price-con">
                     <span>￥</span>
                     <span>{{childItem.comPrice}} &nbsp;</span>
@@ -127,7 +130,7 @@ export default {
             // console.log(data)
             this.list = data.data.list
           } else {
-            this.$message.info(data.msg)
+            this.$toast.fail(data.msg)
           }
         })
       } else {
@@ -138,7 +141,7 @@ export default {
           if (data.code === 0) {
             this.list = data.data.list
           } else {
-            this.$message.info(data.msg)
+            this.$toast.fail(data.msg)
           }
         })
       }
@@ -174,10 +177,10 @@ export default {
             version: item.version
           }).then(data => {
             if (data.code === 0) {
-              this.$message.success(data.msg)
+              this.$toast.success(data.msg)
               this.getOrderList('', this.orderType)
             } else {
-              this.$message.error(data.msg)
+              this.$toast.fail(data.msg)
             }
           })
         })
@@ -189,10 +192,10 @@ export default {
             version: item.version
           }).then(data => {
             if (data.code === 0) {
-              this.$message.success(data.msg)
+              this.$toast.success(data.msg)
               this.getOrderList('', this.orderType)
             } else {
-              this.$message.error(data.msg)
+              this.$toast.fail(data.msg)
             }
           })
         })

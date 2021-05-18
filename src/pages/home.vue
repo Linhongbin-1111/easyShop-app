@@ -96,7 +96,11 @@ export default {
   },
   methods: {
     back () {
-      this.$router.push({path: this.goBackBtn})
+      if (this.goBackBtn === -1) {
+        this.$router.go(-1);
+      } else {
+        this.$router.push({path: this.goBackBtn})
+      }
     },
     toPage (data) {
       if (data.toPath !== this.$route.path) {
